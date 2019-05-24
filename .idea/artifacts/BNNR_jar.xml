@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="BNNR:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/BNNR_jar</output-path>
-    <root id="archive" name="BNNR.jar">
-      <element id="module-output" name="BNNR" />
-    </root>
-  </artifact>
-</component>
