@@ -10,11 +10,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.UUID;
+import java.util.logging.Logger;
 
 public class MyEvents implements Listener {
 
         @EventHandler
         public void mobDeath(EntityDeathEvent event) {
+            Logger log = Bukkit.getLogger();
             LivingEntity entity = event.getEntity();
 
             if(entity instanceof Pillager || entity instanceof Evoker || entity instanceof Vindicator) {
@@ -48,6 +50,8 @@ public class MyEvents implements Listener {
 //                    Check if player killed captain
                     Player killer = event.getEntity().getKiller();
                     if (killer != null) {
+                        log.info(killer.getDisplayName() + " killed a captain");
+                        log.info("Created $BNNR with UUID: " + banner.getItemMeta().getDisplayName());
                         killer.sendMessage("You killed a captain! Created banner with ID: " + banner.getItemMeta().getDisplayName());
                     }
 
@@ -55,6 +59,4 @@ public class MyEvents implements Listener {
 
             }
         }
-
     }
-
