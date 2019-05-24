@@ -1,0 +1,27 @@
+Currency
+  Currency Conversion
+    Assign UUID to banner
+    Store UUID somewhere
+    Add to balance
+  Create currency on captain kill
+    ✓ Rename banner to UUID
+    Store UUID somewhere
+    Tell killer banner was generated (event.source.getDamageType)
+  Banking System //(ALL actions confirmed by The Master of Coin)
+    Deposits
+      Remove item from inventory
+      Required for spending
+      Tax user based on deposit amount
+    Transferring
+      Send $BNNR to other users
+    Spending
+      Remove $BNNR from circulation
+
+Purchasable Goods (1 minute cooldown between all purchases)
+  Flight
+    1 minute per banner spent 
+    PvP disabled
+    No item spawning
+    Flight Timer
+      Warnings for 10%, 5%, 1% of bought time remaining
+      Message when flight is disabled
