@@ -1,0 +1,16 @@
+[
+    {
+        "UUID": "0",
+        "originalOwner": "DJ9123",
+        "spent": false,
+        "spentOn": null,
+        "spender": null
+    },
+    {
+        "UUID": "1",
+        "originalOwner": "sprinklotad",
+        "spent": true,
+        "spentOn": "Flight",
+        "spender": "DJ9123"
+    }
+]
