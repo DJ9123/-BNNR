@@ -3,10 +3,10 @@ Currency
     Assign UUID to banner
     Store UUID somewhere
     Add to balance
-  Create currency on captain kill
-    ✓ Rename banner to UUID
-    ✓ Store UUID somewhere
-    Tell killer banner was generated (event.source.getDamageType)
+  Create currency on captain kill ✓
+    Rename banner to UUID ✓
+    Store UUID somewhere ✓
+    Tell killer banner was generated ✓
   Banking System //(ALL actions confirmed by The Master of Coin)
     Deposits
       Remove item from inventory
