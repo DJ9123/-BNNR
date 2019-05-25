@@ -1,5 +1,6 @@
 package dev.djcook.bnnr;
 
+import dev.djcook.bnnr.commands.CommandBnnr;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -20,6 +21,7 @@ public class Bnnr extends JavaPlugin {
         getLogger().info("howdy");
 
         setupFilePaths();
+        registerCommands();
 
         this.getServer().getPluginManager().registerEvents(new MyEvents(), this);
     }
@@ -46,5 +48,9 @@ public class Bnnr extends JavaPlugin {
 
     public static String getBannersFilePath() {
         return bannersFile;
+    }
+
+    private void registerCommands() {
+        this.getCommand("bnnr").setExecutor(new CommandBnnr());
     }
 }

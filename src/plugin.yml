@@ -3,3 +3,7 @@ version: 0.1.0
 author: TTUMC
 main: dev.djcook.bnnr.Bnnr
 api-version: 1.14
+commands:
+  bnnr:
+    description: Display list of commands for $BNNR
+    usage: /bnnr

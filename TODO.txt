@@ -25,3 +25,7 @@ Purchasable Goods (1 minute cooldown between all purchases)
     Flight Timer
       Warnings for 10%, 5%, 1% of bought time remaining
       Message when flight is disabled
+
+Temp Commands
+  giveFlight
+    Grant a user flight for specified time
