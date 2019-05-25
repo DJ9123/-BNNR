@@ -1,5 +1,5 @@
 name: BNNR
-version: 1.0.0
+version: 0.1.0
 author: TTUMC
-main: dev.djcook.bnnr.bnnr
+main: dev.djcook.bnnr.Bnnr
 api-version: 1.14

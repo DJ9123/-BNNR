@@ -2,6 +2,8 @@ package dev.djcook.bnnr;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,8 +11,12 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.io.File;
+import java.net.URL;
 import java.util.UUID;
 import java.util.logging.Logger;
+
+import static com.sun.javafx.scene.control.skin.Utils.getResource;
 
 public class MyEvents implements Listener {
 

@@ -24,3 +24,4 @@ hs_err_pid*
 
 #workspace user settings
 /.idea/workspace.xml
+/.idea/uiDesigner.xml
