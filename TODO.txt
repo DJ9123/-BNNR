@@ -19,14 +19,14 @@ Currency
 
 Purchasable Goods (1 minute cooldown between all purchases)
   Flight
-    1 minute per banner spent 
+    One minute per banner spent
     PvP disabled
     No item spawning
     Flight Timer
       Warnings for 10%, 5%, 1% of bought time remaining
       Message when flight is disabled
 
-Temp Commands
+Temporary Commands
   giveFlight ✓
     Grant a user flight for specified time ✓
   removeFlight ✓
