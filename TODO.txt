@@ -27,5 +27,7 @@ Purchasable Goods (1 minute cooldown between all purchases)
       Message when flight is disabled
 
 Temp Commands
-  giveFlight
-    Grant a user flight for specified time
+  giveFlight ✓
+    Grant a user flight for specified time ✓
+  removeFlight ✓
+    Remove flight from a user ✓
