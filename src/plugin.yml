@@ -1,7 +1,7 @@
 name: BNNR
 version: 0.1.0
-author: TTUMC
-main: dev.djcook.bnnr.Bnnr
+author: OpressedGames
+main: games.oppressed.bnnr.Bnnr
 api-version: 1.14
 commands:
   bnnr:

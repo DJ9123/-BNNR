@@ -1,4 +1,4 @@
-package dev.djcook.bnnr;
+package games.oppressed.bnnr;
 
 import java.io.*;
 
@@ -12,7 +12,7 @@ public final class ValidBannerManager {
     private final File bannersFile;
     private static final Object fileWritingLock = new Object();
 
-    protected ValidBannerManager() {
+    public ValidBannerManager() {
         bannersFile = new File(Bnnr.getBannersFilePath());
     }
 

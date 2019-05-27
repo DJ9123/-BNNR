@@ -1,4 +1,4 @@
-package dev.djcook.bnnr.commands;
+package games.oppressed.bnnr.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -23,14 +23,14 @@ public class CommandBnnr implements CommandExecutor {
                             if (args.length == 3) {
                                 giveFlight(player, args);
                             } else {
-                                player.sendMessage("Usage /banner giveFlight <username> <time (e.g. \"1\")>");
+                                player.sendMessage("Usage /bnnr giveFlight <username> <time (e.g. \"1\")>");
                             }
                             break;
                         case "removeflight":
                             if (args.length == 2) {
                                 removeFlight(player, args);
                             } else {
-                                player.sendMessage("Usage /banner removeFlight <username>");
+                                player.sendMessage("Usage /bnnr removeFlight <username>");
                             }
                             break;
                         default:
@@ -38,7 +38,7 @@ public class CommandBnnr implements CommandExecutor {
                     }
 
                 } else {
-                    player.sendMessage("Usage /banner <command>");
+                    player.sendMessage("Usage /bnnr <command>");
                 }
 
             } else {

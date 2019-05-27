@@ -26,3 +26,4 @@ hs_err_pid*
 /.idea/workspace.xml
 /.idea/uiDesigner.xml
 /out/production/BNNR/plugin.yml
+/.idea/dictionaries/*.xml

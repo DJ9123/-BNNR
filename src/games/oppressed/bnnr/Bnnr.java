@@ -1,7 +1,10 @@
-package dev.djcook.bnnr;
+package games.oppressed.bnnr;
 
-import dev.djcook.bnnr.commands.CommandBnnr;
+import games.oppressed.bnnr.commands.CommandBnnr;
+import games.oppressed.bnnr.events.BnnrEvents;
+import games.oppressed.bnnr.events.FlightEvents;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -22,8 +25,7 @@ public class Bnnr extends JavaPlugin {
 
         setupFilePaths();
         registerCommands();
-
-        this.getServer().getPluginManager().registerEvents(new MyEvents(this), this);
+        registerEvents(this);
     }
 
     @Override
@@ -52,5 +54,10 @@ public class Bnnr extends JavaPlugin {
 
     private void registerCommands() {
         this.getCommand("bnnr").setExecutor(new CommandBnnr());
+    }
+
+    private void registerEvents(Plugin bnnr) {
+        this.getServer().getPluginManager().registerEvents(new BnnrEvents(), bnnr);
+        this.getServer().getPluginManager().registerEvents(new FlightEvents(bnnr), bnnr);
     }
 }
