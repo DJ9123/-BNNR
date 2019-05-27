@@ -23,7 +23,7 @@ public class Bnnr extends JavaPlugin {
         setupFilePaths();
         registerCommands();
 
-        this.getServer().getPluginManager().registerEvents(new MyEvents(), this);
+        this.getServer().getPluginManager().registerEvents(new MyEvents(this), this);
     }
 
     @Override

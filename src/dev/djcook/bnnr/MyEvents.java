@@ -9,11 +9,17 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -22,6 +28,63 @@ import static com.sun.javafx.scene.control.skin.Utils.getResource;
 public class MyEvents implements Listener {
 
     ValidBannerManager bannerManager = new ValidBannerManager();
+    Plugin plugin;
+
+    public MyEvents(Plugin plugin) {
+        this.plugin = plugin;
+    }
+
+    @EventHandler
+    public void potionEffect(EntityPotionEffectEvent event) {
+        Logger log = Bukkit.getLogger();
+        LivingEntity entity = (LivingEntity) event.getEntity();
+        EntityPotionEffectEvent.Action action = event.getAction();
+
+        if (entity instanceof Player && (action == EntityPotionEffectEvent.Action.CLEARED || action == EntityPotionEffectEvent.Action.REMOVED) && event.getModifiedType().getName().equals("WEAKNESS")) {
+            Player player = (Player) entity;
+
+            String receiverName = player.getDisplayName();
+            Player receiver = Bukkit.getPlayer(receiverName);
+
+//            If been alive longer than minimum flight time
+            if (receiver.getTicksLived() >= 1200 && action == EntityPotionEffectEvent.Action.REMOVED) {
+
+                Collection<PotionEffect> effects = receiver.getActivePotionEffects();
+                Iterator<PotionEffect> iterator = effects.iterator();
+                boolean hasSlowFall = false;
+
+                while (iterator.hasNext()) {
+                    if (iterator.next().getType().equals(PotionEffectType.SLOW_FALLING)) {
+                        hasSlowFall = true;
+                    }
+                }
+
+                if (!hasSlowFall) {
+//                    Send warning and add slow fall
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            PotionEffect slowFall = new PotionEffect(PotionEffectType.SLOW_FALLING, 1200, 1);
+                            receiver.addPotionEffect(slowFall);
+                            PotionEffect weakness = new PotionEffect(PotionEffectType.WEAKNESS, 600, 10, false, false, false);
+                            receiver.addPotionEffect(weakness);
+                            receiver.sendMessage(String.format("You have 30 seconds of flight time remaining. You have been given the slow fall effect for 1 minute."));
+                        }
+                    }, 1L);
+
+                } else {
+//                    Disable flight
+                    receiver.sendMessage("Flight has been disabled. Hope you land safely :)");
+                    receiver.setAllowFlight(false);
+                }
+
+
+            } else {
+//                Died recently or cleared the effect
+                receiver.setAllowFlight(false);
+            }
+        }
+    }
 
     @EventHandler
     public void mobDeath(EntityDeathEvent event) {
