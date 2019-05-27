@@ -2,13 +2,16 @@ package dev.djcook.bnnr;
 
 import datatypes.$BNNR;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
@@ -27,6 +30,42 @@ public class MyEvents implements Listener {
 
     public MyEvents(Plugin plugin) {
         this.plugin = plugin;
+    }
+
+    @EventHandler
+    public void checkFlightOnPlayerQuitEvent(PlayerQuitEvent event) {
+        Logger log = Bukkit.getLogger();
+        Player player = event.getPlayer();
+
+        Iterator<PotionEffect> iterator = player.getActivePotionEffects().iterator();
+
+        boolean hasFlightEffect = false;
+        boolean hasSlowFall = false;
+
+        while (iterator.hasNext()) {
+            PotionEffect potionEffect = iterator.next();
+            if (potionEffect.getType().equals(PotionEffectType.WEAKNESS) && potionEffect.getAmplifier() == 10) {
+                hasFlightEffect = true;
+            } else if (potionEffect.getType().equals(PotionEffectType.SLOW_FALLING)) {
+                hasSlowFall = true;
+            }
+        }
+
+        if (hasSlowFall && !hasFlightEffect) {
+            player.teleport(getHighestLocationBelowPlayer(player.getLocation()));
+            player.removePotionEffect(PotionEffectType.SLOW_FALLING);
+            log.info("Removed SLOW_FALLING from: " + player.getDisplayName());
+        }
+    }
+
+    private Location getHighestLocationBelowPlayer(Location location) {
+        Location downOneY = location.subtract(0.0, 1.0, 0.0);
+
+        if (downOneY.getBlock().getType().equals(Material.AIR)) {
+            return getHighestLocationBelowPlayer(downOneY);
+        } else {
+            return location.add(0.0, 1.0, 0.0);
+        }
     }
 
     @EventHandler
