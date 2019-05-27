@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="minecraft" name="Minecraft">
+      <configuration>
+        <autoDetectTypes>
+          <platformType>SPIGOT</platformType>
+        </autoDetectTypes>
+      </configuration>
+    </facet>
+  </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
@@ -10,15 +19,6 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/dependencies/spigot-api-1.14.1-R0.1-20190516.111338-4.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
           <root url="file://$MODULE_DIR$/dependencies" />
         </CLASSES>
         <JAVADOC />
@@ -26,5 +26,6 @@
         <jarDirectory url="file://$MODULE_DIR$/dependencies" recursive="false" />
       </library>
     </orderEntry>
+    <orderEntry type="library" exported="" name="spigot-1.14.1" level="project" />
   </component>
 </module>
