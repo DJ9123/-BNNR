@@ -3,27 +3,22 @@ package dev.djcook.bnnr;
 import datatypes.$BNNR;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.io.File;
-import java.net.URL;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.UUID;
 import java.util.logging.Logger;
-
-import static com.sun.javafx.scene.control.skin.Utils.getResource;
 
 public class MyEvents implements Listener {
 
@@ -35,7 +30,50 @@ public class MyEvents implements Listener {
     }
 
     @EventHandler
-    public void potionEffect(EntityPotionEffectEvent event) {
+    public void checkFlightOnPlayerJoinEvent(PlayerJoinEvent event) {
+        Logger log = Bukkit.getLogger();
+        Player player = event.getPlayer();
+
+        Collection<PotionEffect> effects = player.getActivePotionEffects();
+        Iterator<PotionEffect> iterator = effects.iterator();
+
+        boolean hasFlightEffect = false;
+        boolean hasSlowFall = false;
+        int flightDuration = 0;
+
+        while (iterator.hasNext()) {
+            PotionEffect potionEffect = iterator.next();
+            if (potionEffect.getType().equals(PotionEffectType.WEAKNESS) && potionEffect.getAmplifier() == 10) {
+                flightDuration = potionEffect.getDuration() / 20;
+                hasFlightEffect = true;
+            } else if (potionEffect.getType().equals(PotionEffectType.SLOW_FALLING)) {
+                hasSlowFall = true;
+            }
+        }
+
+        if (hasFlightEffect) {
+            flightDuration += hasSlowFall ? 0 : 30;
+
+            int minutes = flightDuration / 60;
+            int seconds = flightDuration % 60;
+            String remainingTime = "Flight enabled for ";
+
+            if (minutes > 0 && seconds > 0) {
+                remainingTime += minutes + " minute(s) and " + seconds + " second(s).";
+            } else if (minutes > 0) {
+                remainingTime += minutes + " minute(s)";
+            } else {
+                remainingTime += seconds + " second(s)";
+            }
+
+            player.sendMessage(remainingTime);
+            player.setAllowFlight(true);
+        }
+
+    }
+
+    @EventHandler
+    public void removeFlightPotionEvent(EntityPotionEffectEvent event) {
         Logger log = Bukkit.getLogger();
         LivingEntity entity = (LivingEntity) event.getEntity();
         EntityPotionEffectEvent.Action action = event.getAction();
@@ -87,7 +125,7 @@ public class MyEvents implements Listener {
     }
 
     @EventHandler
-    public void mobDeath(EntityDeathEvent event) {
+    public void killCaptainEvent(EntityDeathEvent event) {
         Logger log = Bukkit.getLogger();
         LivingEntity entity = event.getEntity();
 
