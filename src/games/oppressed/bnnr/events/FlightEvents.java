@@ -104,7 +104,7 @@ public class FlightEvents implements Listener {
     }
 
     @EventHandler
-    public void removeFlightPotionEvent(EntityPotionEffectEvent event) {
+    public void flightPotionEvent(EntityPotionEffectEvent event) {
         LivingEntity entity = (LivingEntity) event.getEntity();
         EntityPotionEffectEvent.Action action = event.getAction();
 
