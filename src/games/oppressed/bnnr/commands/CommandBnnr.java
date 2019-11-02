@@ -155,7 +155,7 @@ public class CommandBnnr implements CommandExecutor {
             potionMeta.clearCustomEffects();
             potionMeta.setColor(Color.AQUA);
 
-            PotionEffect weakness = new PotionEffect(PotionEffectType.WEAKNESS, 1200 * duration - 600, 10, false, false, false);
+            PotionEffect weakness = new PotionEffect(PotionEffectType.WEAKNESS, 1200 * duration - 600, 0, false, false, false);
             potionMeta.addCustomEffect(weakness, true);
 
             potionMeta.setDisplayName("Potion of Flight");
@@ -163,6 +163,7 @@ public class CommandBnnr implements CommandExecutor {
             potion.setItemMeta(potionMeta);
 
             receiver.getInventory().addItem(potion);
+            receiver.sendMessage("Enjoy your " + duration + " minute potion!");
         }
     }
 

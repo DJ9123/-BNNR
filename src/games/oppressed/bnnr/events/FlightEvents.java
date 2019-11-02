@@ -108,49 +108,59 @@ public class FlightEvents implements Listener {
         LivingEntity entity = (LivingEntity) event.getEntity();
         EntityPotionEffectEvent.Action action = event.getAction();
 
-        if (entity instanceof Player && (action == EntityPotionEffectEvent.Action.CLEARED || action == EntityPotionEffectEvent.Action.REMOVED) && event.getModifiedType().getName().equals("WEAKNESS")) {
+        if (entity instanceof Player && event.getModifiedType().getName().equals("WEAKNESS")) {
             Player player = (Player) entity;
 
             String receiverName = player.getDisplayName();
             Player receiver = Bukkit.getPlayer(receiverName);
 
-//            If been alive longer than minimum flight time
-            if (receiver.getTicksLived() >= 1200 && action == EntityPotionEffectEvent.Action.REMOVED) {
+            if (action == EntityPotionEffectEvent.Action.ADDED && event.getNewEffect().getAmplifier() == 0) {
+                int flightMinutes = (event.getNewEffect().getDuration() / 20 + 30) / 60;
+                receiver.setAllowFlight(true);
+                receiver.sendMessage("Flight enabled for " + flightMinutes + " minute(s).");
 
-                Collection<PotionEffect> effects = receiver.getActivePotionEffects();
-                Iterator<PotionEffect> iterator = effects.iterator();
-                boolean hasSlowFall = false;
+            } else if (action == EntityPotionEffectEvent.Action.CLEARED || action == EntityPotionEffectEvent.Action.REMOVED) {
 
-                while (iterator.hasNext()) {
-                    if (iterator.next().getType().equals(PotionEffectType.SLOW_FALLING)) {
-                        hasSlowFall = true;
-                    }
-                }
+//                If been alive longer than minimum flight time
+                if (receiver.getTicksLived() >= 1200 && action == EntityPotionEffectEvent.Action.REMOVED) {
 
-                if (!hasSlowFall) {
-//                    Send warning and add slow fall
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            PotionEffect slowFall = new PotionEffect(PotionEffectType.SLOW_FALLING, 1200, 1);
-                            receiver.addPotionEffect(slowFall);
-                            PotionEffect weakness = new PotionEffect(PotionEffectType.WEAKNESS, 600, 0, false, false, false);
-                            receiver.addPotionEffect(weakness);
-                            receiver.sendMessage(String.format("You have 30 seconds of flight time remaining. You have been given the slow fall effect for 1 minute."));
+                    Collection<PotionEffect> effects = receiver.getActivePotionEffects();
+                    Iterator<PotionEffect> iterator = effects.iterator();
+                    boolean hasSlowFall = false;
+
+                    while (iterator.hasNext()) {
+                        if (iterator.next().getType().equals(PotionEffectType.SLOW_FALLING)) {
+                            hasSlowFall = true;
                         }
-                    }, 1L);
+                    }
+
+                    if (!hasSlowFall) {
+//                    Send warning and add slow fall
+                        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                PotionEffect slowFall = new PotionEffect(PotionEffectType.SLOW_FALLING, 1200, 1);
+                                receiver.addPotionEffect(slowFall);
+                                PotionEffect weakness = new PotionEffect(PotionEffectType.WEAKNESS, 600, 0, false, false, false);
+                                receiver.addPotionEffect(weakness);
+                                receiver.sendMessage(String.format("You have 30 seconds of flight time remaining. You have been given the slow fall effect for 1 minute."));
+                            }
+                        }, 1L);
+
+                    } else {
+//                    Disable flight
+                        receiver.sendMessage("Flight has been disabled. Hope you land safely :)");
+                        receiver.setAllowFlight(false);
+                    }
+
 
                 } else {
-//                    Disable flight
-                    receiver.sendMessage("Flight has been disabled. Hope you land safely :)");
+//                Died recently or cleared the effect
                     receiver.setAllowFlight(false);
                 }
-
-
-            } else {
-//                Died recently or cleared the effect
-                receiver.setAllowFlight(false);
             }
+
+
         }
     }
 }
