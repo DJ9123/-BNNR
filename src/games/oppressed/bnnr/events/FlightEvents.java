@@ -37,7 +37,7 @@ public class FlightEvents implements Listener {
 
         while (iterator.hasNext()) {
             PotionEffect potionEffect = iterator.next();
-            if (potionEffect.getType().equals(PotionEffectType.WEAKNESS) && potionEffect.getAmplifier() == 10) {
+            if (potionEffect.getType().equals(PotionEffectType.WEAKNESS) && potionEffect.getAmplifier() == 0) {
                 hasFlightEffect = true;
             } else if (potionEffect.getType().equals(PotionEffectType.SLOW_FALLING)) {
                 hasSlowFall = true;
@@ -74,7 +74,7 @@ public class FlightEvents implements Listener {
 
         while (iterator.hasNext()) {
             PotionEffect potionEffect = iterator.next();
-            if (potionEffect.getType().equals(PotionEffectType.WEAKNESS) && potionEffect.getAmplifier() == 10) {
+            if (potionEffect.getType().equals(PotionEffectType.WEAKNESS) && potionEffect.getAmplifier() == 0) {
                 flightDuration = potionEffect.getDuration() / 20;
                 hasFlightEffect = true;
             } else if (potionEffect.getType().equals(PotionEffectType.SLOW_FALLING)) {
@@ -134,7 +134,7 @@ public class FlightEvents implements Listener {
                         public void run() {
                             PotionEffect slowFall = new PotionEffect(PotionEffectType.SLOW_FALLING, 1200, 1);
                             receiver.addPotionEffect(slowFall);
-                            PotionEffect weakness = new PotionEffect(PotionEffectType.WEAKNESS, 600, 10, false, false, false);
+                            PotionEffect weakness = new PotionEffect(PotionEffectType.WEAKNESS, 600, 0, false, false, false);
                             receiver.addPotionEffect(weakness);
                             receiver.sendMessage(String.format("You have 30 seconds of flight time remaining. You have been given the slow fall effect for 1 minute."));
                         }

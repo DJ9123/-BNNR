@@ -83,7 +83,7 @@ public class CommandBnnr implements CommandExecutor {
             receiver.setAllowFlight(true);
             sender.sendMessage("Enabled flight for " + receiverName + ".");
 
-            PotionEffect weakness = new PotionEffect(PotionEffectType.WEAKNESS, 1200 * flightMinutes - 600, 10, false, false, false);
+            PotionEffect weakness = new PotionEffect(PotionEffectType.WEAKNESS, 1200 * flightMinutes - 600, 0, false, false, false);
             receiver.addPotionEffect(weakness);
             receiver.sendMessage("Flight enabled for " + flightMinutes + " minute(s).");
         }
